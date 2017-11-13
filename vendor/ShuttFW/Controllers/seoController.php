@@ -3,10 +3,17 @@
 namespace ShuttFW\Controllers;
 
 class SeoController
-{
-	public function checkSlug($url)
+{	
+	private $helpers;
+
+	/**
+	 * Definições, Controllers e parametros para o SEO
+	 * @access public
+  	 * @param object $helpers [Funções auxiliares]
+	*/
+	public function __construct($helpers)
 	{
-		$urlArray = preg_split('[/]', $url, -1, PREG_SPLIT_NO_EMPTY);
-		return $urlArray;
-	}
+		//Instacia de funções auxiliares
+		$this->helpers = $helpers;
+	}	
 }

@@ -32,6 +32,10 @@ class Config
 		define( 'HOME_URI', '/' );
 		// Main Domain 
 		define( 'URL', 'http://www.shutt.com.br' );
+		// System Folders
+		define( 'FOLDERS', "admin|acesso");
+		// App Namespace
+		define( 'APP_NAMESPACE', "Shutt\\");
 
 		// DB Hostname
 		define( 'DB_HOST', 'localhost' );
