@@ -38,13 +38,13 @@ class Config
 		define( 'APP_NAMESPACE', "Shutt\\");
 
 		// DB Hostname
-		define( 'DB_HOST', 'localhost' );
+		define( 'DB_HOST', '198.136.59.195' );
 		// DB Name
-		define( 'DB_NAME', 'shutt_db' );
+		define( 'DB_NAME', 'shuttcom_db' );
 		// DB User
-		define( 'DB_USER', 'shutt_user' );
+		define( 'DB_USER', 'shuttcom_user' );
 		// DB Pass
-		define( 'DB_PASSWORD', '*password*' );
+		define( 'DB_PASSWORD', ')Ei9b4t&oJ.5' );
 		// DB Charset
 		define( 'DB_CHARSET', 'utf8' );
 

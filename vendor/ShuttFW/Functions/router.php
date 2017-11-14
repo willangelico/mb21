@@ -13,6 +13,7 @@ class Router extends MainController
 	private $controller;
 	private $action;
 	private $params;
+	public $name;
 
 	/**
 	 * Rotas da Url	
@@ -21,11 +22,12 @@ class Router extends MainController
 	*/
 	public function __construct($helpers)
 	{
+		// Chama Construtor da classe extendida
+		parent::__construct();	
 		//Instacia de funções auxiliares
-		$this->helpers = $helpers;
-
+		$this->helpers = $helpers;	
 		// Chama os controllers e models 
-		$this->run($this->getUrl());		
+		$this->run($this->getUrl());	
 	}
 
 	/**
@@ -35,12 +37,10 @@ class Router extends MainController
 	*/
 	private function getUrl()
 	{		
-		$urlParse = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-		
-		// Verifica se existe um slug/alias para a url e retorna um array
-		$seo = new SeoController($this->helpers);
+		// Pega a url
+		$urlParse = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);		
+		// Transforma a Url em array		
 		$urlToArray = $this->urlToArray( $urlParse );
-
 		//retorna a url em array
 		return $urlToArray;
 	}	
@@ -72,8 +72,7 @@ class Router extends MainController
 	 * @param array $url [Frações da Url, Controllers e Parametros]
 	*/
 	private function run($url)
-	{
-		//print_r($url);
+	{		
 		// Se posição 0(zero) não for vazio 
 		$this->folder = $this->helpers->checkArray($url,0);
 		// Seta Controller
@@ -95,9 +94,13 @@ class Router extends MainController
 
 		// Verifica se a classe não existe
 		if (! class_exists($class)) { 
-			echo "classe {$class} NÃO existe"; 
-			// pesquisar slug/alias e define a classe correta
+			
+			$seo = new SeoController($this->helpers);
+			$seo->isFriendlyUrl($this->controller);
+			// pesquisar url amigável no BD e define a classe correta
 		}
+
+		
 
 
 	

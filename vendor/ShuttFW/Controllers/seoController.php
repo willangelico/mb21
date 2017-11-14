@@ -2,7 +2,10 @@
 
 namespace ShuttFW\Controllers;
 
-class SeoController
+use ShuttFW\Controllers\MainController;
+
+
+class SeoController extends MainController
 {	
 	private $helpers;
 
@@ -13,7 +16,20 @@ class SeoController
 	*/
 	public function __construct($helpers)
 	{
+		parent::__construct();
 		//Instacia de funções auxiliares
 		$this->helpers = $helpers;
 	}	
+
+	/**
+	 * Verifica se o termo é uma url amigável
+	 * @access public
+  	 * @param string $term [Termo na Url que não é um controller]
+	*/
+	public function isFriendlyUrl($term)
+	{
+
+		//$this->db->insert("tabela", $data);
+		//$main = new MainController();
+	}
 }
