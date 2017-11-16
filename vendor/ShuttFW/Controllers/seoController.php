@@ -5,6 +5,7 @@ namespace ShuttFW\Controllers;
 use ShuttFW\Controllers\MainController;
 
 
+
 class SeoController extends MainController
 {	
 	private $helpers;
@@ -28,6 +29,15 @@ class SeoController extends MainController
 	*/
 	public function isFriendlyUrl($term)
 	{
+		$query = "SELECT * FROM `friendly_url` WHERE url = ?";
+		$res = $this->db->query($query,array($term));
+		
+		if(!$res){
+			return FALSE;
+		}
+		return $res->fetchAll();
+
+
 
 		//$this->db->insert("tabela", $data);
 		//$main = new MainController();

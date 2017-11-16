@@ -96,7 +96,16 @@ class Router extends MainController
 		if (! class_exists($class)) { 
 			
 			$seo = new SeoController($this->helpers);
-			$seo->isFriendlyUrl($this->controller);
+			$isFriendlyUrl = $seo->isFriendlyUrl($this->controller);
+			if(!$isFriendlyUrl){
+				header("HTTP/1.0 404 Not Found");
+
+				include "app/Views/errors/404.html";
+
+				die();
+			}
+
+			var_dump($isFriendlyUrl);
 			// pesquisar url amigável no BD e define a classe correta
 		}
 
