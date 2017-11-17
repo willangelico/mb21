@@ -93,31 +93,41 @@ class Router extends MainController
 		$class = APP_NAMESPACE.$this->folder."Controllers\\".ucfirst($this->controller)."Controller";
 
 		// Verifica se a classe não existe
-		if (! class_exists($class)) { 
-			
+		if ( !class_exists($class)) { 
+			// Carrega a classe Seo
 			$seo = new SeoController($this->helpers);
-			$isFriendlyUrl = $seo->isFriendlyUrl($this->controller);
+			// Verifica se é uma url amigável
+			$isFriendlyUrl = $seo->isFriendlyUrl($this->folder,$this->controller);
+			// Se a Url não existe retorna erro 404
 			if(!$isFriendlyUrl){
 				header("HTTP/1.0 404 Not Found");
-
 				include "app/Views/errors/404.html";
-
 				die();
 			}
-
-			var_dump($isFriendlyUrl);
-			// pesquisar url amigável no BD e define a classe correta
+			// Seta o Controller correto
+			$this->controller = $isFriendlyUrl[0]['table_name'];
+			// redefine a classe
+			$class = APP_NAMESPACE.$this->folder."Controllers\\".ucfirst($this->controller)."Controller";
 		}
 
+		if( !method_exists($class, $this->action) ){
+			// Define Action 
+			$this->action = 'show';
+			// Redefine parâmetros
+			$this->params 	= array_slice($url, 1); 
+		}
 		
+		// Instancia a classe controladora
+		$controller = new $class($this->configParams());
+
+		// Seta a ação
+		$action = $this->action;
+
+		// Chama a função
+		$controller->$action();
+		die();
 
 
-	
-
-
-		//$main = new MainController();
-		//$this->mainTeste();
-		//
 		echo "<br />pasta: ".$this->folder;
 		echo "<br />controller: ".$this->controller;
 		echo "<br />action: ".$this->action;
@@ -125,5 +135,13 @@ class Router extends MainController
 		print_r($this->params);
 		echo "<br />";
 
+	}
+
+	public function configParams()
+	{
+		$main = new MainController();
+		$main->setParams($this->params);
+		$main->configtemplate($this->folder);
+		return $main;
 	}
 }

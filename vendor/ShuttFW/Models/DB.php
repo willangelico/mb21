@@ -129,7 +129,7 @@ class DB
 		$exec = $query->execute( $data );
 
 		// verifica a consulta e retorna erro, se necessário
-		if( !$exec ){
+		if( !$exec ){			
 			$error = $query->errorInfo();
 			$this->error = $error[2];
 			return FALSE;

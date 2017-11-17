@@ -4,8 +4,6 @@ namespace ShuttFW\Controllers;
 
 use ShuttFW\Controllers\MainController;
 
-
-
 class SeoController extends MainController
 {	
 	private $helpers;
@@ -26,20 +24,25 @@ class SeoController extends MainController
 	 * Verifica se o termo é uma url amigável
 	 * @access public
   	 * @param string $term [Termo na Url que não é um controller]
+   	 * @param string $folder [Pasta na Url, nulo permitido]
 	*/
-	public function isFriendlyUrl($term)
-	{
-		$query = "SELECT * FROM `friendly_url` WHERE url = ?";
+	public function isFriendlyUrl($folder = "", $term)
+	{		
+		// seta a variável sqlFolder
+		$sqlFolder = "";
+		// Verifica se há uma pasta, se sim configura a variavel para a consultar 
+		if($folder){
+			$sqlFolder = 'and folder = "'.stripslashes($folder).'"';
+		}
+		// Monta a query de consulta
+		$query = "SELECT * FROM `friendly_url` WHERE url = ? {$sqlFolder}";	
+		// Envia os dados
 		$res = $this->db->query($query,array($term));
-		
+		// Se não retornar resultado, retorna FALSE
 		if(!$res){
 			return FALSE;
 		}
+		// Retorna conjunto de dados
 		return $res->fetchAll();
-
-
-
-		//$this->db->insert("tabela", $data);
-		//$main = new MainController();
 	}
 }
